@@ -1,9 +1,92 @@
 <div *ngIf="selectedCar">
-    <div>Id : {{ selectedCar.id }}</div>
-    <div>Brand : {{ selectedCar.brand }}</div>
-    <div>Model : {{ selectedCar.model }}</div>
-    <div>HorsePower : {{ selectedCar.horsePower }}</div>
-    <div>Weight : {{ selectedCar.weight }}</div>
-    <div>N° seats : {{ selectedCar.nbSeats }}</div>
-    <div>Price : {{ selectedCar.price }}</div>
+    <!--
+    <button *ngIf="!isEdit" (click)="edit()">Edit</button>
+    <button *ngIf="!isCreate" (click)="create()">Create</button>
+    -->
+    <button  (click)="toggleEdit()">Edit</button>
+    <button  (click)="toggleCreate()">Create</button>
+    <button  (click)="toggleDelete()">Delete</button>
+    <div>isEdit : {{isEdit}}</div>
+    <div>isCreate : {{isCreate}}</div>
+    <div>isDelete : {{isDelete}}</div>
+    <br/>
+    <br/>
+    <br/>
+
+    <div *ngIf="!isCreate && !isDelete && !isEdit" >
+            <div>Id : {{ selectedCar.id }}</div>
+            <div>Brand : {{ selectedCar.brand }}</div>
+            <div>Model : {{ selectedCar.model }}</div>
+            <div>HorsePower : {{ selectedCar.horsePower }}</div>
+            <div>Weight : {{ selectedCar.weight }}</div>
+            <div>N° seats : {{ selectedCar.nbSeats }}</div>
+            <div>Price : {{ selectedCar.price }}</div>
+    </div>
+    <span [ngSwitch]="isEdit">
+        <!--
+        <div *ngSwitchCase="false">Id : {{ selectedCar.id }}</div>
+        <div *ngSwitchCase="false">Brand : {{ selectedCar.brand }}</div>
+        <div *ngSwitchCase="false">Model : {{ selectedCar.model }}</div>
+        <div *ngSwitchCase="false">HorsePower : {{ selectedCar.horsePower }}</div>
+        <div *ngSwitchCase="false">Weight : {{ selectedCar.weight }}</div>
+        <div *ngSwitchCase="false">N° seats : {{ selectedCar.nbSeats }}</div>
+        <div *ngSwitchCase="false">Price : {{ selectedCar.price }}</div>
+        -->
+
+        <div *ngSwitchCase="true">
+            <label>N° seats :</label>
+            <input [(ngModel)]="selectedCar.nbSeats"/>$
+        </div>
+        <div *ngSwitchCase="true">
+            <label>Price :</label>
+            <input [(ngModel)]="selectedCar.price"/>
+        </div>
+        
+        <button *ngIf="isEdit" (click)="modify()">Modify</button>
+
+        <span *ngIf="isDelete">
+            <div>Id : {{ selectedCar.id }}</div>
+            <div>Brand : {{ selectedCar.brand }}</div>
+            <div>Model : {{ selectedCar.model }}</div>
+            <div>HorsePower : {{ selectedCar.horsePower }}</div>
+            <div>Weight : {{ selectedCar.weight }}</div>
+            <div>N° seats : {{ selectedCar.nbSeats }}</div>
+            <div>Price : {{ selectedCar.price }}</div>
+            <button *ngIf="isDelete" (click)="delete()">Delete</button>
+        </span>
+    </span>
+
+    <span *ngIf="isCreate && !isEdit">
+        <div>
+                <label>Id :</label>
+                <input  [(ngModel)]="createdCar.id" [readonly]="true" placeholder="Id"/>$<!--[value]="getMaxId()"-->
+        </div>
+        <div>
+                <label>Brand :</label>
+                <input [(ngModel)]="createdCar.brand" placeholder="Brand"/>$
+        </div>
+        <div>
+                <label>Model :</label>
+                <input [(ngModel)]="createdCar.model" placeholder="Model"/>$
+        </div>
+        <div>
+                <label>HorsePower :</label>
+                <input [(ngModel)]="createdCar.horsePower" placeholder="HorsePower"/>$
+        </div>
+        <div>
+                <label>Weight :</label>
+                <input [(ngModel)]="createdCar.weight" placeholder="Weight"/>$
+        </div>
+        <div>
+                <label>N° seats :</label>
+                <input [(ngModel)]="createdCar.nbSeats" placeholder="Seats" />$
+        </div>
+        <div>
+                <label>Price :</label>
+                <input [(ngModel)]="createdCar.price" placeholder="Price"/>
+        </div>
+
+        <button (click)="create()">Add Car</button>
+    </span>
+
 </div>
